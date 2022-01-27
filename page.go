@@ -16,3 +16,15 @@ func FetchPageList(secret_token string, db_id string) string {
 	)
 	return response
 }
+
+func CreatePage(secret_token string, db_id string, content string) string {
+	response := http.PostRequest(
+		base_url+"pages",
+		secret_token,
+		"{\"parent\": {\"database_id\": \""+db_id+"\"}, "+
+			// TODO: change `Name` to be able to input from argument
+			"\"properties\": {\"Name\": {\"title\": "+
+			"[{\"text\": {\"content\": \""+content+"\"}}]}}}",
+	)
+	return response
+}
