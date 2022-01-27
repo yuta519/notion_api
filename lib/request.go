@@ -1,4 +1,4 @@
-package notionapi
+package lib
 
 import (
 	"io/ioutil"
@@ -12,7 +12,7 @@ var (
 	content_type   string = "application/json"
 )
 
-func Get(endpoint string, secret_token string) string {
+func GetRequest(endpoint string, secret_token string) string {
 	req, _ := http.NewRequest("GET", endpoint, nil)
 	req.Header.Set("Notion-Version", notion_version)
 	req.Header.Set("Authorization", secret_token)
@@ -28,7 +28,7 @@ func Get(endpoint string, secret_token string) string {
 	return string(body)
 }
 
-func Post(endpoint string, secret_token string, payload string) string {
+func PostRequest(endpoint string, secret_token string, payload string) string {
 	req, _ := http.NewRequest("POST", endpoint, strings.NewReader(payload))
 	req.Header.Set("Notion-Version", notion_version)
 	req.Header.Set("Authorization", secret_token)
