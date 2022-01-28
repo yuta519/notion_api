@@ -1,6 +1,7 @@
 package http
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -12,7 +13,7 @@ var (
 	content_type   string = "application/json"
 )
 
-func Get(endpoint string, secret_token string) string {
+func Get(endpoint string, secret_token string) map[string]interface{} {
 	req, _ := http.NewRequest("GET", endpoint, nil)
 	req.Header.Set("Notion-Version", notion_version)
 	req.Header.Set("Authorization", secret_token)
@@ -24,8 +25,10 @@ func Get(endpoint string, secret_token string) string {
 
 	defer res.Body.Close()
 	body, _ := ioutil.ReadAll(res.Body)
+	data := parseResponseToJson(string(body))
 
-	return string(body)
+	// return string(body)
+	return data
 }
 
 func Post(endpoint string, secret_token string, payload string) string {
@@ -60,4 +63,14 @@ func Patch(endpoint string, secret_token string, payload string) string {
 	body, _ := ioutil.ReadAll(res.Body)
 
 	return string(body)
+}
+
+func parseResponseToJson(response string) map[string]interface{} {
+	resBytes := []byte(response)
+	var jsonRes map[string]interface{}
+	err := json.Unmarshal(resBytes, &jsonRes)
+	if err != nil {
+		os.Exit(1)
+	}
+	return jsonRes
 }

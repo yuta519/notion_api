@@ -5,7 +5,7 @@ import (
 	"github.com/yuta519/notion_api/utils"
 )
 
-func FetchDatabaseIds(secret_token string) string {
+func FetchDatabaseIds(secret_token string) map[string]interface{} {
 	response := http.Get(utils.BaseUrl+"databases", secret_token)
 	return response
 }
