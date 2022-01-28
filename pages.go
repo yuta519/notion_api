@@ -2,15 +2,12 @@ package notion_api
 
 import (
 	"github.com/yuta519/notion_api/handler/http"
-)
-
-var (
-	base_url string = "https://api.notion.com/v1/"
+	"github.com/yuta519/notion_api/utils"
 )
 
 func FetchPageList(secret_token string, db_id string) string {
 	response := http.Post(
-		base_url+"databases/"+db_id+"/query",
+		utils.BaseUrl+"databases/"+db_id+"/query",
 		secret_token,
 		"{\"page_size\":100}",
 	)
@@ -19,7 +16,7 @@ func FetchPageList(secret_token string, db_id string) string {
 
 func CreatePage(secret_token string, db_id string, content string) string {
 	response := http.Post(
-		base_url+"pages",
+		utils.BaseUrl+"pages",
 		secret_token,
 		"{\"parent\": {\"database_id\": \""+db_id+"\"}, "+
 			// TODO: change `Name` to be able to input from argument
@@ -29,6 +26,7 @@ func CreatePage(secret_token string, db_id string, content string) string {
 	return response
 }
 
+// TODO: create schema.go to define attribute
 func UpdatePage(
 	secret_token string,
 	page_id string,
@@ -37,7 +35,7 @@ func UpdatePage(
 	content string,
 ) string {
 	response := http.Patch(
-		base_url+"pages/"+page_id,
+		utils.BaseUrl+"pages/"+page_id,
 		secret_token,
 		"{\"properties\": { \""+where+"\": {\""+attribute+
 			"\": [{\"text\": {\"content\": \""+content+"\"}}]}}}",
