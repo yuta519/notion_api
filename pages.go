@@ -5,7 +5,7 @@ import (
 	"github.com/yuta519/notion_api/utils"
 )
 
-func FetchPageList(secret_token string, db_id string) string {
+func FetchPageList(secret_token string, db_id string) map[string]interface{} {
 	response := http.Post(
 		utils.BaseUrl+"databases/"+db_id+"/query",
 		secret_token,
@@ -14,7 +14,7 @@ func FetchPageList(secret_token string, db_id string) string {
 	return response
 }
 
-func CreatePage(secret_token string, db_id string, content string) string {
+func CreatePage(secret_token string, db_id string, content string) map[string]interface{} {
 	response := http.Post(
 		utils.BaseUrl+"pages",
 		secret_token,
@@ -33,7 +33,7 @@ func UpdatePage(
 	where string,
 	attribute string,
 	content string,
-) string {
+) map[string]interface{} {
 	response := http.Patch(
 		utils.BaseUrl+"pages/"+page_id,
 		secret_token,
