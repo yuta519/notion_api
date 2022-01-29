@@ -8,4 +8,4 @@ replace github.com/yuta519/notion_api/handler/http => ./handler/http/
 
 replace github.com/yuta519/notion_api/utils => ./utils
 
-require github.com/jarcoal/httpmock v1.1.0 // indirect
+require github.com/jarcoal/httpmock v1.1.0

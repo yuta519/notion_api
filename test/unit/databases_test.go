@@ -22,6 +22,16 @@ func TestFetchDatabaseIds(t *testing.T) {
 
 	res := notion_api.FetchDatabaseIds("")
 
+	// To test correct parsing
+	_, objectOk := res["object"]
+	_, resultsOk := res["results"]
+	_, nextcursorOk := res["next_cursor"]
+	_, hasMoreOk := res["has_more"]
+	if !objectOk || !resultsOk || !nextcursorOk || !hasMoreOk {
+		t.Errorf("Some fileds are parsed incorrectly.")
+	}
+
+	// To test a value of object key
 	if res["object"].(string) != "list" {
 		t.Errorf("oh my godness")
 	}
