@@ -1,7 +1,6 @@
 package http
 
 import (
-	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -13,7 +12,7 @@ var (
 	content_type   string = "application/json"
 )
 
-func Get(endpoint string, secret_token string) map[string]interface{} {
+func Get(endpoint string, secret_token string) []byte {
 	req, _ := http.NewRequest("GET", endpoint, nil)
 	req.Header.Set("Notion-Version", notion_version)
 	req.Header.Set("Authorization", secret_token)
@@ -24,16 +23,15 @@ func Get(endpoint string, secret_token string) map[string]interface{} {
 	}
 
 	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-	data := parseResponseToJson(string(body))
-	return data
+	responseByte, _ := ioutil.ReadAll(res.Body)
+	return responseByte
 }
 
 func Post(
 	endpoint string,
 	secret_token string,
 	payload string,
-) map[string]interface{} {
+) []byte {
 	req, _ := http.NewRequest("POST", endpoint, strings.NewReader(payload))
 	req.Header.Set("Notion-Version", notion_version)
 	req.Header.Set("Authorization", secret_token)
@@ -45,16 +43,16 @@ func Post(
 	}
 
 	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-	data := parseResponseToJson(string(body))
-	return data
+	responseByte, _ := ioutil.ReadAll(res.Body)
+	return responseByte
+
 }
 
 func Patch(
 	endpoint string,
 	secret_token string,
 	payload string,
-) map[string]interface{} {
+) []byte {
 	req, _ := http.NewRequest("PATCH", endpoint, strings.NewReader(payload))
 	req.Header.Set("Notion-Version", notion_version)
 	req.Header.Set("Authorization", secret_token)
@@ -66,17 +64,16 @@ func Patch(
 	}
 
 	defer res.Body.Close()
-	body, _ := ioutil.ReadAll(res.Body)
-	data := parseResponseToJson(string(body))
-	return data
+	responseByte, _ := ioutil.ReadAll(res.Body)
+	return responseByte
 }
 
-func parseResponseToJson(response string) map[string]interface{} {
-	resBytes := []byte(response)
-	var jsonRes map[string]interface{}
-	err := json.Unmarshal(resBytes, &jsonRes)
-	if err != nil {
-		os.Exit(1)
-	}
-	return jsonRes
-}
+// func parseResponseToJson(response string) map[string]interface{} {
+// 	resBytes := []byte(response)
+// 	var jsonRes map[string]interface{}
+// 	err := json.Unmarshal(resBytes, &jsonRes)
+// 	if err != nil {
+// 		os.Exit(1)
+// 	}
+// 	return jsonRes
+// }

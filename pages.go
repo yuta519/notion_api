@@ -1,44 +1,54 @@
 package notion_api
 
 import (
+	"strconv"
+
 	"github.com/yuta519/notion_api/handler/http"
 	"github.com/yuta519/notion_api/utils"
 )
 
-func FetchPageList(secret_token string, db_id string) map[string]interface{} {
+func FetchPages(
+	secret_token string,
+	db_id string,
+	page_size int,
+) []byte {
 	response := http.Post(
 		utils.BaseUrl+"databases/"+db_id+"/query",
 		secret_token,
-		"{\"page_size\":100}",
+		"{\"page_size\":"+strconv.Itoa(page_size)+"}",
 	)
 	return response
 }
 
-func CreatePage(secret_token string, db_id string, content string) map[string]interface{} {
+func CreatePage(
+	secret_token string,
+	db_id string,
+	key string,
+	attribute string,
+	value string,
+) []byte {
 	response := http.Post(
 		utils.BaseUrl+"pages",
 		secret_token,
 		"{\"parent\": {\"database_id\": \""+db_id+"\"}, "+
-			// TODO: change `Name` to be able to input from argument
-			"\"properties\": {\"Name\": {\"title\": "+
-			"[{\"text\": {\"content\": \""+content+"\"}}]}}}",
+			"\"properties\": {\""+key+"\": {\""+attribute+"\": "+
+			"[{\"text\": {\"content\": \""+value+"\"}}]}}}",
 	)
 	return response
 }
 
-// TODO: create schema.go to define attribute
 func UpdatePage(
 	secret_token string,
 	page_id string,
-	where string,
+	key string,
 	attribute string,
-	content string,
-) map[string]interface{} {
+	value string,
+) []byte {
 	response := http.Patch(
 		utils.BaseUrl+"pages/"+page_id,
 		secret_token,
-		"{\"properties\": { \""+where+"\": {\""+attribute+
-			"\": [{\"text\": {\"content\": \""+content+"\"}}]}}}",
+		"{\"properties\": { \""+key+"\": {\""+attribute+
+			"\": [{\"text\": {\"content\": \""+value+"\"}}]}}}",
 	)
 	return response
 }
