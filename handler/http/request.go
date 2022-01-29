@@ -26,12 +26,14 @@ func Get(endpoint string, secret_token string) map[string]interface{} {
 	defer res.Body.Close()
 	body, _ := ioutil.ReadAll(res.Body)
 	data := parseResponseToJson(string(body))
-
-	// return string(body)
 	return data
 }
 
-func Post(endpoint string, secret_token string, payload string) string {
+func Post(
+	endpoint string,
+	secret_token string,
+	payload string,
+) map[string]interface{} {
 	req, _ := http.NewRequest("POST", endpoint, strings.NewReader(payload))
 	req.Header.Set("Notion-Version", notion_version)
 	req.Header.Set("Authorization", secret_token)
@@ -44,11 +46,15 @@ func Post(endpoint string, secret_token string, payload string) string {
 
 	defer res.Body.Close()
 	body, _ := ioutil.ReadAll(res.Body)
-
-	return string(body)
+	data := parseResponseToJson(string(body))
+	return data
 }
 
-func Patch(endpoint string, secret_token string, payload string) string {
+func Patch(
+	endpoint string,
+	secret_token string,
+	payload string,
+) map[string]interface{} {
 	req, _ := http.NewRequest("PATCH", endpoint, strings.NewReader(payload))
 	req.Header.Set("Notion-Version", notion_version)
 	req.Header.Set("Authorization", secret_token)
@@ -61,8 +67,8 @@ func Patch(endpoint string, secret_token string, payload string) string {
 
 	defer res.Body.Close()
 	body, _ := ioutil.ReadAll(res.Body)
-
-	return string(body)
+	data := parseResponseToJson(string(body))
+	return data
 }
 
 func parseResponseToJson(response string) map[string]interface{} {
