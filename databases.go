@@ -2,7 +2,6 @@ package notion_api
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 
 	"github.com/yuta519/notion_api/handler/http"
@@ -62,7 +61,22 @@ func FetchRawResponseOfDatabases(secret_token string) Databases {
 	return databases
 }
 
-func FetchDatabases(secret_token string) {
+func FetchDatabases(secret_token string) []Database {
 	response := FetchRawResponseOfDatabases(secret_token).Results
-	fmt.Println(response[0])
+	return response
+}
+
+func FetchDatabaseIds(secret_token string) []map[string]string {
+	response := FetchRawResponseOfDatabases(secret_token).Results
+	var database_ids []map[string]string
+	for _, database := range response {
+		database_ids = append(
+			database_ids,
+			map[string]string{
+				"id":    database.Id,
+				"title": database.Title[0].PlainText,
+			},
+		)
+	}
+	return database_ids
 }
