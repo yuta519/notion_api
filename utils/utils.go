@@ -22,6 +22,7 @@ type Object struct {
 	Properties     map[string]interface{} `json:"properties"`
 	Title          []Title                `json:"title"`
 	Url            string                 `json:"url"`
+	Archived       *bool                  `json:"archived"`
 }
 
 type Cover struct {
