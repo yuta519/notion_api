@@ -1,23 +1,26 @@
 package notion_api
 
 import (
+	"encoding/json"
 	"strconv"
 
 	"github.com/yuta519/notion_api/handler/http"
 	"github.com/yuta519/notion_api/utils"
 )
 
-func FetchPages(
+func FetchPagesByDbId(
 	secret_token string,
 	db_id string,
 	page_size int,
-) []byte {
+) utils.Objects {
 	response := http.Post(
 		utils.BaseUrl+"databases/"+db_id+"/query",
 		secret_token,
 		"{\"page_size\":"+strconv.Itoa(page_size)+"}",
 	)
-	return response
+	var pages utils.Objects
+	json.Unmarshal(response, &pages)
+	return pages
 }
 
 func CreatePage(
