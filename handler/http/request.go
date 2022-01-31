@@ -67,13 +67,3 @@ func Patch(
 	responseByte, _ := ioutil.ReadAll(res.Body)
 	return responseByte
 }
-
-// func parseResponseToJson(response string) map[string]interface{} {
-// 	resBytes := []byte(response)
-// 	var jsonRes map[string]interface{}
-// 	err := json.Unmarshal(resBytes, &jsonRes)
-// 	if err != nil {
-// 		os.Exit(1)
-// 	}
-// 	return jsonRes
-// }

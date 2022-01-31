@@ -37,3 +37,18 @@ func FetchDatabaseIds(secret_token string) []map[string]string {
 	}
 	return database_ids
 }
+
+// TODO: could make?
+// func CreateDatabase(
+// 	secret_token string,
+// 	parent_page_id string,
+// 	// title []map[string]interface{},
+// 	key string,
+// 	attribute string,
+// 	value string,
+// ) {
+// 	payload := "{\"parent\": {\"type\": \"page_id\", \"page_id\": \"" + parent_page_id + "\"}, " +
+// 		"\"properties\": {\"" + key + "\": {\"" + attribute + "\": [{\"text\": {\"content\": \"" + value + "\"}}]}}}"
+// 	res := http.Post(utils.BaseUrl+"databases", secret_token, payload)
+// 	fmt.Println(string(res))
+// }
