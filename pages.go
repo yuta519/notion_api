@@ -2,21 +2,26 @@ package notion_api
 
 import (
 	"encoding/json"
-	"strconv"
+	"strings"
 
 	"github.com/yuta519/notion_api/handler/http"
 	"github.com/yuta519/notion_api/utils"
 )
 
+type UpdatePageFormat struct {
+	Attribute string
+	Key       string
+	Value     string
+}
+
 func FetchPagesByDbId(
 	secret_token string,
 	db_id string,
-	page_size int,
 ) utils.Objects {
 	response := http.Post(
 		utils.BaseUrl+"databases/"+db_id+"/query",
 		secret_token,
-		"{\"page_size\":"+strconv.Itoa(page_size)+"}",
+		"",
 	)
 	var pages utils.Objects
 	json.Unmarshal(response, &pages)
@@ -54,4 +59,27 @@ func UpdatePage(
 			"\": [{\"text\": {\"content\": \""+value+"\"}}]}}}",
 	)
 	return response
+}
+
+func UpdatePropertiesInPage(
+	secret_token string,
+	page_id string,
+	properties []UpdatePageFormat,
+) string {
+	payloads := "{\"properties\": {"
+	for _, property := range properties {
+		payload := "\"" + property.Key + "\": {\"" +
+			property.Attribute + "\": [{\"text\": {\"content\": \"" +
+			property.Value + "\"}}]},"
+		payloads = payloads + payload
+	}
+	payloads = strings.TrimRight(payloads, ",")
+	payloads = payloads + "}}"
+
+	response := http.Patch(
+		utils.BaseUrl+"pages/"+page_id,
+		secret_token,
+		payloads,
+	)
+	return string(response)
 }
