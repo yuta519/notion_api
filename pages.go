@@ -8,7 +8,7 @@ import (
 	"github.com/yuta519/notion_api/utils"
 )
 
-type UpdatePageFormat struct {
+type Properties struct {
 	Attribute string
 	Key       string
 	Value     string
@@ -45,26 +45,10 @@ func CreatePage(
 	return response
 }
 
-func UpdatePage(
-	secret_token string,
-	page_id string,
-	key string,
-	attribute string,
-	value string,
-) []byte {
-	response := http.Patch(
-		utils.BaseUrl+"pages/"+page_id,
-		secret_token,
-		"{\"properties\": { \""+key+"\": {\""+attribute+
-			"\": [{\"text\": {\"content\": \""+value+"\"}}]}}}",
-	)
-	return response
-}
-
 func UpdatePropertiesInPage(
 	secret_token string,
 	page_id string,
-	properties []UpdatePageFormat,
+	properties []Properties,
 ) string {
 	payloads := "{\"properties\": {"
 	for _, property := range properties {
