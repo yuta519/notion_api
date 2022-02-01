@@ -80,7 +80,6 @@ func ExportPageToMarkdown(secret_token string, page_id string) {
 	defer file.Close()
 
 	for _, block := range blocks.Results {
-		fmt.Println(block.Type)
 		if block.Type == "paragraph" {
 			file.WriteString(parseParagraphToMarkdown(block))
 		} else if block.Type == "heading_1" {
@@ -94,21 +93,27 @@ func ExportPageToMarkdown(secret_token string, page_id string) {
 		} else if block.Type == "child_page" {
 			file.WriteString(parseChildPageToMarkdown(block))
 		} else if block.Type == "child_database" {
+			fmt.Println(block.Type)
 			fmt.Println(block)
-			// else if block.Type == "heading_2" {
-			// 	fmt.Println(*block.Heading_2)
-			// } else if block.Type == "heading_2" {
-			// 	fmt.Println(*block.Heading_2)
-			// } else if block.Type == "heading_2" {
-			// 	fmt.Println(*block.Heading_2)
-			// } else if block.Type == "heading_2" {
-			// 	fmt.Println(*block.Heading_2)
-			// } else if block.Type == "heading_2" {
-			// 	fmt.Println(*block.Heading_2)
-			// } else if block.Type == "heading_2" {
-			// 	fmt.Println(*block.Heading_2)
-			// }
+		} else if block.Type == "table" {
+			// can't export table type because api does not support yet.
+			file.WriteString(parseTableToMarkdown(block))
+		} else if block.Type == "bulleted_list_item" {
+			file.WriteString(parseBulletedListItemToMarkdown(block))
+		} else if block.Type == "numbered_list_item" {
+			// can't export table type because api does not support yet.
+			file.WriteString(parseNumberedListItemToMarkdown(block))
+		} else if block.Type == "toggle" {
+			// can't export table type because api does not support yet.
+			file.WriteString(parseToggleToMarkdown(block))
+		} else if block.Type == "quote" {
+			file.WriteString(parseQuoteToMarkdown(block))
+		} else if block.Type == "divider" {
+			file.WriteString(parseDividerToMarkdown(block))
+		} else if block.Type == "callout" {
+			file.WriteString(parseCalloutToMarkdown(block))
 		} else {
+			fmt.Println(block.Type)
 			fmt.Println(block)
 		}
 		file.WriteString("\n")

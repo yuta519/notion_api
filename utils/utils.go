@@ -33,19 +33,26 @@ type Blocks struct {
 }
 
 type Block struct {
-	ObjectType     string     `json:"object"`
-	Id             string     `json:"id"`
-	CreatedTime    string     `json:"created_time"`
-	LastEditedTime string     `json:"last_edited_time"`
-	HasChildren    bool       `json:"has_children"`
-	Archived       bool       `json:"archived"`
-	Type           string     `json:"type"`
-	Paragraph      *Paragraph `json:"paragraph"`
-	Heading_1      *Heading   `json:"heading_1"`
-	Heading_2      *Heading   `json:"heading_2"`
-	Heading_3      *Heading   `json:"heading_3"`
-	ToDo           *ToDo      `json:"to_do"`
-	ChildPage      *ChildPage `json:"child_page"`
+	ObjectType       string            `json:"object"`
+	Id               string            `json:"id"`
+	CreatedTime      string            `json:"created_time"`
+	LastEditedTime   string            `json:"last_edited_time"`
+	HasChildren      bool              `json:"has_children"`
+	Archived         bool              `json:"archived"`
+	Type             string            `json:"type"`
+	Paragraph        *Paragraph        `json:"paragraph"`
+	Heading_1        *Heading          `json:"heading_1"`
+	Heading_2        *Heading          `json:"heading_2"`
+	Heading_3        *Heading          `json:"heading_3"`
+	ToDo             *ToDo             `json:"to_do"`
+	ChildPage        *ChildPage        `json:"child_page"`
+	Table            *Table            `json:"table"`
+	BulletedListItem *BulletedListItem `json:"bulleted_list_item"`
+	NumberedListItem *NumberedListItem `json:"numbered_list_item"`
+	Toggle           *Toggle           `json:"toggle"`
+	Quote            *Quote            `json:"quote"`
+	Divider          *interface{}      `json:"divider"`
+	Callout          *Callout          `json:"callout"`
 }
 
 type Cover struct {
@@ -94,4 +101,31 @@ type ToDo struct {
 
 type ChildPage struct {
 	Title string `json:"title"`
+}
+
+type Table struct {
+	TableWidth      int  `json:"table_width"`
+	HasColumnHeader bool `json:"has_column_header"`
+	HasRowHeader    bool `json:"has_row_header"`
+}
+
+type BulletedListItem struct {
+	Text []TextBlock `json:"text"`
+}
+
+type NumberedListItem struct {
+	Text []TextBlock `json:"text"`
+}
+
+type Toggle struct {
+	Text []TextBlock `json:"text"`
+}
+
+type Quote struct {
+	Text []TextBlock `json:"text"`
+}
+
+type Callout struct {
+	Text []TextBlock `json:"text"`
+	Icon Icon        `json:"icon"`
 }

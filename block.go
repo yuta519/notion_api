@@ -99,3 +99,81 @@ func parseChildPageToMarkdown(block utils.Block) string {
 	}
 	return chiled_page_text
 }
+
+func parseTableToMarkdown(block utils.Block) string {
+	var table_text string
+	if block.Table.HasColumnHeader {
+		fmt.Println()
+	} else {
+		table_text = "| | | \n| ---- | ---- | \n"
+	}
+	if block.Table.TableWidth > 0 {
+		for i := 0; i < block.Table.TableWidth+1; i++ {
+			table_text += "| "
+		}
+	} else {
+		table_text = "\n"
+	}
+	return table_text
+}
+
+func parseBulletedListItemToMarkdown(block utils.Block) string {
+	var bulleted_list_item string
+	if len(block.BulletedListItem.Text) > 0 {
+		bulleted_list_item = "- " + block.BulletedListItem.Text[0].PlainText
+	} else {
+		bulleted_list_item = "- "
+	}
+	return bulleted_list_item
+}
+
+func parseNumberedListItemToMarkdown(block utils.Block) string {
+	var numbered_list_item string
+	if len(block.NumberedListItem.Text) > 0 {
+		for i := 1; i < len(block.NumberedListItem.Text)+1; i++ {
+			numbered_list_item = strconv.Itoa(i) + ". " +
+				block.NumberedListItem.Text[0].PlainText
+		}
+	} else {
+		numbered_list_item = "- "
+	}
+	return numbered_list_item
+}
+
+func parseToggleToMarkdown(block utils.Block) string {
+	var toggle string
+	if len(block.Toggle.Text) > 0 {
+		not_yet := "nothing"
+		toggle = "<details><summary>" + block.Toggle.Text[0].PlainText +
+			"</summary>" + not_yet + "</details>"
+	} else {
+		toggle = "\n"
+	}
+	return toggle
+}
+
+func parseQuoteToMarkdown(block utils.Block) string {
+	var quote string
+	if len(block.Quote.Text) > 0 {
+		quote = "\n> " + block.Quote.Text[0].PlainText
+	} else {
+		quote = "\n"
+	}
+	return quote
+}
+
+func parseDividerToMarkdown(block utils.Block) string {
+	return "---"
+}
+
+func parseCalloutToMarkdown(block utils.Block) string {
+	callout := "```\n"
+	if len(block.Callout.Text) > 0 {
+		callout += block.Callout.Icon.Emoji + block.Callout.Text[0].PlainText +
+			"\n```"
+	} else {
+		callout = "\n"
+	}
+	return callout
+
+}
