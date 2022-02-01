@@ -2,6 +2,8 @@ package notion_api
 
 import (
 	"encoding/json"
+	"fmt"
+	"os"
 	"strings"
 
 	"github.com/yuta519/notion_api/handler/http"
@@ -66,4 +68,49 @@ func UpdatePropertiesInPage(
 		payloads,
 	)
 	return string(response)
+}
+
+func ExportPageToMarkdown(secret_token string, page_id string) {
+	blocks := FetchChildrenInBlock(secret_token, page_id, 1000)
+
+	file, err := os.Create("./file.md")
+	if err != nil {
+		os.Exit(1)
+	}
+	defer file.Close()
+
+	for _, block := range blocks.Results {
+		fmt.Println(block.Type)
+		if block.Type == "paragraph" {
+			file.WriteString(parseParagraphToMarkdown(block))
+		} else if block.Type == "heading_1" {
+			file.WriteString(parseHeading1ToMarkdown(block))
+		} else if block.Type == "heading_2" {
+			file.WriteString(parseHeading2ToMarkdown(block))
+		} else if block.Type == "heading_3" {
+			file.WriteString(parseHeading3ToMarkdown(block))
+		} else if block.Type == "to_do" {
+			file.WriteString(parseToDoToMarkdown(block))
+		} else if block.Type == "child_page" {
+			file.WriteString(parseChildPageToMarkdown(block))
+		} else if block.Type == "child_database" {
+			fmt.Println(block)
+			// else if block.Type == "heading_2" {
+			// 	fmt.Println(*block.Heading_2)
+			// } else if block.Type == "heading_2" {
+			// 	fmt.Println(*block.Heading_2)
+			// } else if block.Type == "heading_2" {
+			// 	fmt.Println(*block.Heading_2)
+			// } else if block.Type == "heading_2" {
+			// 	fmt.Println(*block.Heading_2)
+			// } else if block.Type == "heading_2" {
+			// 	fmt.Println(*block.Heading_2)
+			// } else if block.Type == "heading_2" {
+			// 	fmt.Println(*block.Heading_2)
+			// }
+		} else {
+			fmt.Println(block)
+		}
+		file.WriteString("\n")
+	}
 }

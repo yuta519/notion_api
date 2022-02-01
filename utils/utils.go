@@ -25,6 +25,29 @@ type Object struct {
 	Archived       *bool                  `json:"archived"`
 }
 
+type Blocks struct {
+	HasMore    bool        `json:"has_more"`
+	NextCursor interface{} `json:"next_cursor"`
+	ObjectType string      `json:"object"`
+	Results    []Block     `json:"results"`
+}
+
+type Block struct {
+	ObjectType     string     `json:"object"`
+	Id             string     `json:"id"`
+	CreatedTime    string     `json:"created_time"`
+	LastEditedTime string     `json:"last_edited_time"`
+	HasChildren    bool       `json:"has_children"`
+	Archived       bool       `json:"archived"`
+	Type           string     `json:"type"`
+	Paragraph      *Paragraph `json:"paragraph"`
+	Heading_1      *Heading   `json:"heading_1"`
+	Heading_2      *Heading   `json:"heading_2"`
+	Heading_3      *Heading   `json:"heading_3"`
+	ToDo           *ToDo      `json:"to_do"`
+	ChildPage      *ChildPage `json:"child_page"`
+}
+
 type Cover struct {
 	External map[string]string `json:"external"`
 	Type     string            `json:"type"`
@@ -48,19 +71,27 @@ type Title struct {
 	Type        string                 `json:"type"`
 }
 
-type Blocks struct {
-	HasMore    bool        `json:"has_more"`
-	NextCursor interface{} `json:"next_cursor"`
-	ObjectType string      `json:"object"`
-	Results    []Block     `json:"results"`
+type TextBlock struct {
+	Annotations map[string]interface{} `json:"annotations"`
+	Href        *string                `json:"href"`
+	PlainText   string                 `json:"plain_text"`
+	Text        map[string]string      `json:"text"`
+	Type        string                 `json:"type"`
 }
 
-type Block struct {
-	ObjectType     string `json:"object"`
-	Id             string `json:"id"`
-	CreatedTime    string `json:"created_time"`
-	LastEditedTime string `json:"last_edited_time"`
-	HasChildren    bool   `json:"has_children"`
-	Archived       bool   `json:"archived"`
-	Type           string `json:"type"`
+type Paragraph struct {
+	Text []TextBlock `json:"text"`
+}
+
+type Heading struct {
+	Text []TextBlock `json:"text"`
+}
+
+type ToDo struct {
+	Text    []TextBlock `json:"text"`
+	Checked bool        `json:"checked"`
+}
+
+type ChildPage struct {
+	Title string `json:"title"`
 }
