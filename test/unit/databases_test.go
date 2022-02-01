@@ -23,7 +23,7 @@ func TestFetchDatabaseIds(t *testing.T) {
 	res := notion_api.FetchRawResponseOfDatabases("")
 
 	// To test a value of object key
-	if res.Object != "list" {
+	if res.ObjectType != "list" {
 		t.Errorf("oh my godness")
 	}
 }

@@ -7,7 +7,7 @@ var (
 type Objects struct {
 	HasMore    bool        `json:"has_more"`
 	NextCursor interface{} `json:"next_cursor"`
-	Object     string      `json:"object"`
+	ObjectType string      `json:"object"`
 	Results    []Object    `json:"results"`
 }
 
@@ -46,4 +46,14 @@ type Title struct {
 	PlainText   string                 `json:"plain_text"`
 	Text        map[string]string      `json:"text"`
 	Type        string                 `json:"type"`
+}
+
+type Block struct {
+	ObjectType     string `json:"object"`
+	Id             string `json:"id"`
+	CreatedTime    string `json:"created_time"`
+	LastEditedTime string `json:"last_edited_time"`
+	HasChildren    bool   `json:"has_children"`
+	Archived       bool   `json:"archived"`
+	Type           string `json:"type"`
 }
