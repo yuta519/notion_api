@@ -48,6 +48,13 @@ type Title struct {
 	Type        string                 `json:"type"`
 }
 
+type Blocks struct {
+	HasMore    bool        `json:"has_more"`
+	NextCursor interface{} `json:"next_cursor"`
+	ObjectType string      `json:"object"`
+	Results    []Block     `json:"results"`
+}
+
 type Block struct {
 	ObjectType     string `json:"object"`
 	Id             string `json:"id"`
