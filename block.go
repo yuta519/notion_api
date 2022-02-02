@@ -127,15 +127,15 @@ func parseBulletedListItemToMarkdown(block utils.Block) string {
 	return bulleted_list_item
 }
 
-func parseNumberedListItemToMarkdown(block utils.Block) string {
+func parseNumberedListItemToMarkdown(block utils.Block, num int) string {
 	var numbered_list_item string
 	if len(block.NumberedListItem.Text) > 0 {
-		for i := 1; i < len(block.NumberedListItem.Text)+1; i++ {
-			numbered_list_item = strconv.Itoa(i) + ". " +
-				block.NumberedListItem.Text[0].PlainText
-		}
+		// for i := 1; i < len(block.NumberedListItem.Text)+1; i++ {
+		numbered_list_item = strconv.Itoa(num) + ". " +
+			block.NumberedListItem.Text[0].PlainText
+		// }
 	} else {
-		numbered_list_item = "- "
+		numbered_list_item = "\n"
 	}
 	return numbered_list_item
 }

@@ -79,7 +79,7 @@ func ExportPageToMarkdown(secret_token string, page_id string) {
 	}
 	defer file.Close()
 
-	for _, block := range blocks.Results {
+	for i, block := range blocks.Results {
 		if block.Type == "paragraph" {
 			file.WriteString(parseParagraphToMarkdown(block))
 		} else if block.Type == "heading_1" {
@@ -101,8 +101,13 @@ func ExportPageToMarkdown(secret_token string, page_id string) {
 		} else if block.Type == "bulleted_list_item" {
 			file.WriteString(parseBulletedListItemToMarkdown(block))
 		} else if block.Type == "numbered_list_item" {
-			// can't export table type because api does not support yet.
-			file.WriteString(parseNumberedListItemToMarkdown(block))
+			number := 1
+			if i != 0 {
+				for i := i; blocks.Results[i-1].Type == "numbered_list_item"; i-- {
+					number += 1
+				}
+			}
+			file.WriteString(parseNumberedListItemToMarkdown(block, number))
 		} else if block.Type == "toggle" {
 			// can't export table type because api does not support yet.
 			file.WriteString(parseToggleToMarkdown(block))
