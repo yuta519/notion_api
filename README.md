@@ -1,8 +1,9 @@
 # notion_api
 
-# About
+## About
+This is a notion api SDK of golang.
 
-# WHY I created this library
+## WHY I created this library
 Do you use [notion](https://notion.so)? I love notion.
 
 So I, heavy notion user, want to use notion anywhere.
@@ -14,11 +15,11 @@ For example:
 - Using notion makes it difficult to export knowledge when you need.
 -
 
-# Techniques
+## Techniques
 This library made of:
 - Golang
 
-# Easy to use
+## Easy to use
 This section expains how to use this library.
 
 1. Download the library.
@@ -68,7 +69,7 @@ map[id:17cb9b38-1749-46f0-9b86-8c2b77abd898 title:API Test]]
 
 <!-- # Upcoming Features -->
 
-# License
+## License
 Copyright 2022 Yuta Kawamura
 
 Licensed under the Apache License, Version 2.0 (the "License");
