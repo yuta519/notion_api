@@ -83,7 +83,11 @@ func UpdatePropertiesInPage(
 	return string(response)
 }
 
-func ExportPageToMarkdown(secret_token string, page_id string) {
+func ExportPageToMarkdown(
+	secret_token string,
+	page_id string,
+	destination_directory string,
+) {
 	page_info := FetchPageByPageId(secret_token, page_id)
 	blocks := FetchChildrenInBlock(secret_token, page_id, 1000)
 
@@ -92,7 +96,7 @@ func ExportPageToMarkdown(secret_token string, page_id string) {
 	if len(title_of_page_info) > 0 {
 		filename = title_of_page_info[0].(map[string]interface{})["plain_text"].(string)
 	}
-	file, err := os.Create("./" + filename + ".md")
+	file, err := os.Create(destination_directory + "/" + filename + ".md")
 	if err != nil {
 		os.Exit(1)
 	}
@@ -115,7 +119,7 @@ func ExportPageToMarkdown(secret_token string, page_id string) {
 		} else if block.Type == "child_page" {
 			file.WriteString(parseChildPageToMarkdown(block))
 		} else if block.Type == "child_database" {
-			// can't export table type because api does not support yet.
+			// can't export child database type because does not support yet.
 			fmt.Println(block.Type)
 			fmt.Println(block)
 		} else if block.Type == "table" {
@@ -132,7 +136,7 @@ func ExportPageToMarkdown(secret_token string, page_id string) {
 			}
 			file.WriteString(parseNumberedListItemToMarkdown(block, number))
 		} else if block.Type == "toggle" {
-			// can't export table type because api does not support yet.
+			// can't export toggle type because api does not support yet.
 			file.WriteString(parseToggleToMarkdown(block))
 		} else if block.Type == "quote" {
 			file.WriteString(parseQuoteToMarkdown(block))

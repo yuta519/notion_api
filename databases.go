@@ -2,7 +2,6 @@ package notion_api
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 
 	"github.com/yuta519/notion_api/handler/http"
@@ -68,42 +67,43 @@ func ExportDbToMarkdown(secret_token string, db_id string) {
 	database := FetchfDatabase(secret_token, db_id)
 	title_of_db := database.Title
 	db_name := "Untitled"
+
 	if len(title_of_db) > 0 {
 		db_name = title_of_db[0].PlainText
 	}
 
+	// Pass the error handling
+	os.Mkdir(db_name, 0777)
 	// if err := os.Mkdir(db_name, 0777); err != nil {
 	// 	os.Exit(1)
 	// }
 
+	// Pass the database markdown
 	// file, err := os.Create("./" + db_name + "/" + db_name + ".md")
 	// if err != nil {
 	// 	os.Exit(1)
 	// }
+	// file.WriteString("# " + db_name + "\n\n\n")
+	// pages := FetchPagesByDbId(secret_token, db_id)
+	// for property := range database.Properties {
+	// 	for _, page := range pages.Results {
+	// 		page_type := page.Properties[property].(map[string]interface{})["type"].(string)
+	// 		if page_type == "rich_text" {
+	// 			rich_text := page.Properties[property].(map[string]interface{})["rich_text"].([]interface{})
+	// 			if len(rich_text) > 0 {
+	// 				file.WriteString(property + ": " +
+	// 					rich_text[0].(map[string]interface{})["plain_text"].(string),
+	// 				)
+	// 			}
+	// 		} else if page_type == "multi_select" {
+	// 			fmt.Println()
+	// 		}
+	// 		file.WriteString("\n")
+	// 	}
+	// }
 
-	// fmt.Println(database.ObjectType)
-	fmt.Println(db_name)
-
-	pages := FetchPagesByDbId(
-		"secret_OgKvRWjGQu3fzSHuApNIkFXKu4nxjiw3TOahfguoIPA",
-		"17cb9b38-1749-46f0-9b86-8c2b77abd898",
-	)
-
-	for property := range database.Properties {
-		fmt.Println(property)
-		fmt.Println()
-		for _, page := range pages.Results {
-			fmt.Println(page.Properties[property])
-			fmt.Println()
-		}
-	}
-
-	// file.WriteString("# " + db_name)
-
+	pages := FetchPagesByDbId(secret_token, db_id)
 	for _, page := range pages.Results {
-		fmt.Println(page.Id)
-		fmt.Println(page.Properties)
-		fmt.Println()
+		ExportPageToMarkdown(secret_token, page.Id, db_name)
 	}
-
 }
