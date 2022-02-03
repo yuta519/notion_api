@@ -30,6 +30,19 @@ func FetchPagesByDbId(
 	return pages
 }
 
+func FetchPageByPageId(
+	secret_token string,
+	page_id string,
+) utils.Object {
+	response := http.Get(
+		utils.BaseUrl+"pages/"+page_id,
+		secret_token,
+	)
+	var page utils.Object
+	json.Unmarshal(response, &page)
+	return page
+}
+
 func CreatePage(
 	secret_token string,
 	db_id string,
@@ -71,13 +84,22 @@ func UpdatePropertiesInPage(
 }
 
 func ExportPageToMarkdown(secret_token string, page_id string) {
+	page_info := FetchPageByPageId(secret_token, page_id)
 	blocks := FetchChildrenInBlock(secret_token, page_id, 1000)
 
-	file, err := os.Create("./file.md")
+	title_of_page_info := page_info.Properties["Name"].(map[string]interface{})["title"].([]interface{})
+	filename := "Untitled"
+	if len(title_of_page_info) > 0 {
+		filename = title_of_page_info[0].(map[string]interface{})["plain_text"].(string)
+	}
+	file, err := os.Create("./" + filename + ".md")
 	if err != nil {
 		os.Exit(1)
 	}
 	defer file.Close()
+
+	file.WriteString("# " + filename)
+	file.WriteString("\n---\n\n\n")
 
 	for i, block := range blocks.Results {
 		if block.Type == "paragraph" {
@@ -93,6 +115,7 @@ func ExportPageToMarkdown(secret_token string, page_id string) {
 		} else if block.Type == "child_page" {
 			file.WriteString(parseChildPageToMarkdown(block))
 		} else if block.Type == "child_database" {
+			// can't export table type because api does not support yet.
 			fmt.Println(block.Type)
 			fmt.Println(block)
 		} else if block.Type == "table" {
