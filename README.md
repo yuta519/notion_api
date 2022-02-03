@@ -3,23 +3,66 @@
 # About
 
 # WHY I created this library
-Do you use [notion](https://notion.so)?
--> I love notion.
+Do you use [notion](https://notion.so)? I love notion.
 
 So I, heavy notion user, want to use notion anywhere.
 
-BUT some reasons restict this desire.
-For example:
-- Notion is prohibited to use by your company
-- Using notion makes it difficult to export knowledge when you need
--
+But some reasons restict this desire.
 
-When you have a time, you could solve these problems.
-But you think it is ...
+For example:
+- Notion is prohibited in your company.
+- Using notion makes it difficult to export knowledge when you need.
+-
 
 # Techniques
 This library made of:
 - Golang
+
+# Easy to use
+This section expains how to use this library.
+
+1. Download the library.
+
+```
+ $ go get github.com/yuta519/notion_api
+ $ go mod tidy
+```
+
+2. Create sample go file.
+``` golang
+$ touch main.go
+```
+
+3. Edit `main.go` like below.
+```go
+package main
+
+import (
+    "fmt"
+
+	"github.com/yuta519/notion_api"
+)
+
+func main() {
+    db_ids := notion_api.FetchDatabaseIds(
+        "<notion API Secret Key>",
+	)
+	fmt.Println(db_ids)
+  }
+```
+
+
+4. Run code!
+```
+go run main.go
+```
+
+If it works well, you'll get response like below.
+(You can get an id of your database and title.)
+```
+map[id:17cb9b38-1749-46f0-9b86-8c2b77abd898 title:API Test]]
+```
+
 
 <!-- # Architecture -->
 
