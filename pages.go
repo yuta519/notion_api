@@ -96,7 +96,10 @@ func ExportPageToMarkdown(
 	if len(title_of_page_info) > 0 {
 		filename = title_of_page_info[0].(map[string]interface{})["plain_text"].(string)
 	}
-	file, err := os.Create(destination_directory + "/" + filename + ".md")
+
+	file, err := os.Create(
+		destination_directory + "/" + strings.ReplaceAll(filename, " ", "_") + ".md",
+	)
 	if err != nil {
 		os.Exit(1)
 	}
