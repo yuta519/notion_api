@@ -1,19 +1,19 @@
-# notion_api
+# Notion API
 
 ## About
 This is a notion api SDK of golang.
 
 ## WHY I created this library
-Do you use [notion](https://notion.so)? I love notion.
+Do you use [notion](https://notion.so)?
+I love to use a Notion.
 
-So I, heavy notion user, want to use notion anywhere.
+So I, heavy Notion user, want to use Notion anywhere.
 
-But some reasons restict this desire.
+But some reasons distrub this desire.
 
 For example:
-- Notion is prohibited in your company.
+- Notion is prohibited in a company.
 - Using notion makes it difficult to export knowledge when you need.
--
 
 ## Techniques
 This library made of:
