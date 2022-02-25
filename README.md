@@ -1,25 +1,20 @@
-# Notion API
+<div align="center">
+	<h1>Notion SDK for Golang</h1>
+	<p>
+		<b>A simple and easy to use client for the <a href="https://developers.notion.com">Notion API</a></b>
+	</p>
+	<br>
+</div>
+
 
 ## About
 This is a notion api SDK of golang.
-
-## WHY I created this library
-Do you use [notion](https://notion.so)?
-I love to use a Notion.
-
-So I, heavy Notion user, want to use Notion anywhere.
-
-But some reasons distrub this desire.
-
-For example:
-- Notion is prohibited in a company.
-- Using notion makes it difficult to export knowledge when you need.
 
 ## Techniques
 This library made of:
 - Golang
 
-## Easy to use
+## Usage
 This section expains how to use this library.
 
 1. Download the library.
@@ -63,6 +58,18 @@ If it works well, you'll get response like below.
 ```
 map[id:17cb9b38-1749-46f0-9b86-8c2b77abd898 title:API Test]]
 ```
+
+## WHY I created this library
+Do you use [notion](https://notion.so)?
+I love to use a Notion.
+
+So I, heavy Notion user, want to use Notion anywhere.
+
+But some reasons distrub this desire.
+
+For example:
+- Notion is prohibited in a company.
+- Using notion makes it difficult to export knowledge when you need.
 
 
 <!-- # Architecture -->
