@@ -59,6 +59,9 @@ If it works well, you'll get response like below.
 map[id:17cb9b38-1749-46f0-9b86-8c2b77abd898 title:API Test]]
 ```
 
+If you want to know more information, please access [this documentation](https://github.com/yuta519/notion_api/blob/main/documents/support_features.md).
+
+
 ## WHY I created this library
 Do you use [notion](https://notion.so)?
 I love to use a Notion.
