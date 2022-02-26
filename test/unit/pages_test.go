@@ -8,7 +8,7 @@ import (
 	"github.com/yuta519/notion_api/utils"
 )
 
-var expected_raw_page_result string = "{\"object\":\"page\"," +
+var expected_raw_page string = "{\"object\":\"page\"," +
 	"\"id\":\"xxxxxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"," +
 	"\"created_time\":\"2022-01-30T23:51:00.000Z\"," +
 	"\"last_edited_time\":\"2022-02-03T23:42:00.000Z\",\"cover\":null,\"icon\":null," +
@@ -31,7 +31,7 @@ func TestFetchPages(t *testing.T) {
 		utils.BaseUrl+"pages/111",
 		httpmock.NewBytesResponder(
 			200,
-			[]byte(expected_raw_page_result)),
+			[]byte(expected_raw_page)),
 	)
 
 	page := notion_api.FetchPageByPageId("", "111")
