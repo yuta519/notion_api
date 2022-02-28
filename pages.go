@@ -128,6 +128,12 @@ func ExportPageToMarkdown(
 		} else if block.Type == "table" {
 			// can't export table type because api does not support yet.
 			file.WriteString(parseTableToMarkdown(block))
+			table_block_content := FetchChildrenInBlock(secret_token, block.Id, 1000)
+			// table_block_content := ExportPageToMarkdown(secret_token, )
+
+			for _, block := range table_block_content.Results {
+				fmt.Println(block.Type)
+			}
 		} else if block.Type == "bulleted_list_item" {
 			file.WriteString(parseBulletedListItemToMarkdown(block))
 		} else if block.Type == "numbered_list_item" {
