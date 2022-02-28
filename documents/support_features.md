@@ -19,18 +19,14 @@
   - [Retrieve a page detail](#Retrieve-a-page-detail)
     - Retrieve a page detail from page id you specifiied.
 
-
 - BLOCKS
   - aaa
-  -
 
 - USERS
-  - aaa
-  -
+  - Not yet
 
 - SEARCH
-  - aaa
-  -
+  - Not yet
 
 
 # Sample usage
