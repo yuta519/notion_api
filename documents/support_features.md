@@ -9,11 +9,11 @@
   - [Retrieve a database IDs](#Retrieve-a-database-IDs)
     - Return database IDs in your Notion.
 
-  - [Export Pages in Database](#Export-Pages-in-Database)
+  - [Export pages in Database](#Export-Pages-in-Database)
     - Export pages in database you specifiied to Markdown files.
 
 - PAGES
-  - [Retrieve Page ID in Database](#)
+  - [Retrieve pages in Database](#Retrieve-pages-in-Database)
     - Retrieve page ID in database you specifiied.
 
 - BLOCKS
@@ -110,11 +110,7 @@ def main() {
 ```go
 package main
 
-import (
-  "fmt"
-
-	"github.com/yuta519/notion_api"
-)
+import ("github.com/yuta519/notion_api")
 
 def main() {
 	notion_api.ExportDbToMarkdown(
@@ -125,3 +121,41 @@ def main() {
 ```
 
 After executing this function, you will find created directory and md files.
+
+
+- Sample outputs
+```
+[map[id:1092f20d-09fb-407f-b36a-93b7a28c220a title:ToDo] map[id:0cc1608c-8be9-42ca-9bf8-3f6070d6c6d5 title:aaa] map[id:17cb9b38-1749-46f0-9b86-8c2b77abd898 title: Blogs]]
+```
+
+## PAGES
+### Retrieve pages in Database
+
+-  Sample code
+```go
+package main
+
+import (
+  "fmt"
+
+	"github.com/yuta519/notion_api"
+)
+
+def main() {
+	pages := notion_api.FetchPagesByDbId(
+		"secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", // Please replace your Notion API key
+		"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", // Please replace your Notion Database ID
+	)
+	for _, page := range pages.Results {
+		fmt.Println(page.Id)
+	}
+
+}
+```
+
+- Sample outputs (You will get page IDs.)
+```
+d5c73dd1-2ede-4426-a662-9d25599f860e
+9d804704-b514-4336-b2e1-885ae8616297
+42c82964-cf32-45a7-960b-b64d77496759
+```
