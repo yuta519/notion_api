@@ -100,19 +100,30 @@ func parseChildPageToMarkdown(block utils.Block) string {
 	return chiled_page_text
 }
 
-func parseTableToMarkdown(block utils.Block) string {
+func parseTableToMarkdown(secret_token string, block utils.Block) string {
 	var table_text string
-	if block.Table.HasColumnHeader {
-		fmt.Println()
-	} else {
-		table_text = "| | | \n| ---- | ---- | \n"
-	}
+	table_block_content := FetchChildrenInBlock(secret_token, block.Id, 1000)
+
 	if block.Table.TableWidth > 0 {
-		for i := 0; i < block.Table.TableWidth+1; i++ {
+		for i := 0; i < block.Table.TableWidth; i++ {
 			table_text += "| "
 		}
-	} else {
-		table_text = "\n"
+		table_text += "| \n"
+		for i := 0; i < block.Table.TableWidth; i++ {
+			table_text += "| ---- "
+		}
+		table_text += "| \n"
+	}
+	for _, row := range table_block_content.Results {
+		table_text += "| "
+		for _, cell := range row.TableRow.Cells {
+			if len(cell) > 0 {
+				table_text += cell[0].PlainText + " | "
+			} else {
+				table_text += " |"
+			}
+		}
+		table_text += "\n"
 	}
 	return table_text
 }

@@ -47,6 +47,7 @@ type Block struct {
 	ToDo             *ToDo             `json:"to_do"`
 	ChildPage        *ChildPage        `json:"child_page"`
 	Table            *Table            `json:"table"`
+	TableRow         *TableRow         `json:"table_row"`
 	BulletedListItem *BulletedListItem `json:"bulleted_list_item"`
 	NumberedListItem *NumberedListItem `json:"numbered_list_item"`
 	Toggle           *Toggle           `json:"toggle"`
@@ -107,6 +108,18 @@ type Table struct {
 	TableWidth      int  `json:"table_width"`
 	HasColumnHeader bool `json:"has_column_header"`
 	HasRowHeader    bool `json:"has_row_header"`
+}
+
+type TableRow struct {
+	Cells [][]Cell `json:"cells"`
+}
+
+type Cell struct {
+	Type        string      `json:"type"`
+	Text        interface{} `json:"text"`
+	Annotations interface{} `json:"annotations"`
+	PlainText   string      `json:"plain_text"`
+	Href        string      `json:"href"`
 }
 
 type BulletedListItem struct {
