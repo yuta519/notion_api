@@ -14,7 +14,11 @@
 
 - PAGES
   - [Retrieve pages in Database](#Retrieve-pages-in-Database)
-    - Retrieve page ID in database you specifiied.
+    - Retrieve pages included in database you specifiied.
+
+  - [Retrieve a page detail](#Retrieve-a-page-detail)
+    - Retrieve a page detail from page id you specifiied.
+
 
 - BLOCKS
   - aaa
@@ -29,7 +33,7 @@
   -
 
 
-# Usage Sample
+# Sample usage
 
 ## DATABASES
 
@@ -158,4 +162,32 @@ def main() {
 d5c73dd1-2ede-4426-a662-9d25599f860e
 9d804704-b514-4336-b2e1-885ae8616297
 42c82964-cf32-45a7-960b-b64d77496759
+```
+
+
+### Retrieve a page detail
+
+-  Sample code
+```go
+package main
+
+import (
+  "fmt"
+
+	"github.com/yuta519/notion_api"
+)
+
+def main() {
+	page := notion_api.FetchPageByPageId(
+		"secret_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", // Please replace your Notion API key
+		"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", // Please replace your Notion Database ID
+	)
+	fmt.Println(page)
+
+}
+```
+
+- Sample outputs (You will get page IDs.)
+```
+{<nil> 2022-02-10T07:48:00.000Z <nil> 8b3a01bf-5520-484a-8de4-b585b2e11841 2022-02-18T00:29:00.000Z page {database_id false} map[Category:map[id:mAOk select:<nil> type:select] Name:map[id:title title:[map[annotations:map[bold:false code:false color:default italic:false strikethrough:false underline:false] href:<nil> plain_text:aaaaaa text:map[content:aaaaaa link:<nil>] type:text]] type:title] Status:map[id:bxnI select:<nil> type:select]] [] https://www.notion.so/aaaaaa-8b3a01bf5520484a8de4b585b2e11841 0xc0000169cb}
 ```
